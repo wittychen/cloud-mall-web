@@ -1,0 +1,48 @@
+### 服务端口
+server:
+  port: 9090
+
+## 服务提供方
+spring:
+  application:
+    name: cloud-mall-web
+
+
+### 管理安全失效
+management:
+  security:
+    enabled: false
+
+## 启用/ restart端点重新启动应用程序上下文
+## endpoints.restart.enabled = true
+#endpoints:
+#  restart:
+#    enabled: true
+
+user:
+  service:
+    id: 1
+    name: wittychen
+
+## Spring Cloud Eureka 客户端 注册到 Eureka 服务器
+#eureka:
+#  client:
+#    serviceUrl:
+#      defaultZone: http://localhost:9020/eureka
+
+## 配置连接 Eureka 服务器
+## 配置多个 Eureka 注册中心，以"," 分割
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:9020/eureka,http://localhost:9021/eureka
+
+
+service:
+  name:
+    user: cloud-mall-user-service
+
+feign:
+  hystrix:
+    enabled: true
+
