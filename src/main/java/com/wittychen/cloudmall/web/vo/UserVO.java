@@ -7,6 +7,8 @@
  */
 package com.wittychen.cloudmall.web.vo;
 
+import java.io.Serializable;
+
 import lombok.Data;
 
 /**
@@ -17,7 +19,9 @@ import lombok.Data;
  * @since 2018-05-15 15:38
  */
 @Data
-public class UserVO {
+public class UserVO implements Serializable {
+
+    private static final long serialVersionUID = -196411951874917052L;
 
     private Long id;
 

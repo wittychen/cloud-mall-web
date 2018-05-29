@@ -20,12 +20,13 @@ eureka:
       defaultZone: http://localhost:9020/eureka
 
 
-spring:
-  cloud:
-    config:
-      name: cloudmall-web
-      profile: dev
-      label: master
-      discovery:
-        enabled: true
-        service-id: cloud-mall-config-server
+#spring:
+#  cloud:
+#    config:
+#      name: cloudmall-web
+#      profile: dev
+#      label: master
+#      discovery:
+#        enabled: true
+#        service-id: cloud-mall-config-server
+

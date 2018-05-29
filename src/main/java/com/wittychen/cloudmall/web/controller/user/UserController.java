@@ -7,6 +7,7 @@
  */
 package com.wittychen.cloudmall.web.controller.user;
 
+import com.wittychen.cloudmall.user.api.bo.UserBO;
 import com.wittychen.cloudmall.web.client.UserClient;
 import com.wittychen.cloudmall.web.config.UserConfig;
 import com.wittychen.cloudmall.web.vo.UserVO;
@@ -16,6 +17,9 @@ import java.util.concurrent.TimeoutException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.support.SendResult;
+import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,6 +43,9 @@ public class UserController {
     @Autowired
     private UserClient userClient;
 
+    @Autowired
+    private KafkaTemplate<String, Object> kafkaTemplate;
+
     @GetMapping("/{id}")
     public UserVO get(@PathVariable("id") Long id) {
         return userClient.get(id);
@@ -61,5 +68,14 @@ public class UserController {
         if (randomNum > 500)
             throw new TimeoutException("timeout!");
         return new UserVO();
+    }
+
+    @GetMapping("/send")
+    public Boolean send(String name) {
+        UserBO userBO = new UserBO();
+        userBO.setName(name);
+        ListenableFuture<SendResult<String, Object>> future = kafkaTemplate.send(
+            "cloud-mall-web-user", 0, userBO);
+        return future.isDone();
     }
 }
